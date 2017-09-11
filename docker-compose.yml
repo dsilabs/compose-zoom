@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: "mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=myrootpass
+  web:
+    image:
+      dsilabs/zoom:latest
+    ports:
+     - "8080:8080"
+    links:
+     - db:database
+    depends_on:
+     - db
+    environment:
+     - ZOOM_SITE_NAME=Web Server
+    #  - ZOOM_APPS_PATH=/work/web/apps
+     - ZOOM_DB_PASS=myrootpass
