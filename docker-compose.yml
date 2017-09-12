@@ -6,14 +6,76 @@ services:
       - MYSQL_ROOT_PASSWORD=myrootpass
   web:
     image:
-      dsilabs/zoom:latest
+      dsilabs/zoom
     ports:
-     - "8080:8080"
+     - "8090:8080"
     links:
      - db:database
     depends_on:
      - db
     environment:
-     - ZOOM_SITE_NAME=Web Server
-    #  - ZOOM_APPS_PATH=/work/web/apps
+     - ZOOM_SITE_NAME=CDW Demo
      - ZOOM_DB_PASS=myrootpass
+     - ZOOM_APPS_PATH=/work/web/apps
+    volumes:
+     - /work/cdw/web/apps:/work/web/apps
+  app1:
+    image:
+      dsilabs/zoom
+    ports:
+     - "8091:8080"
+    links:
+     - db:database
+    depends_on:
+     - db
+    environment:
+     - ZOOM_SITE_NAME=App Server 1
+     - ZOOM_DB_PASS=myrootpass
+     - ZOOM_APPS_PATH=/work/app/apps
+    volumes:
+     - /work/cdw/app/apps:/work/app/apps
+  app2:
+    image:
+      dsilabs/zoom
+    ports:
+     - "8092:8080"
+    links:
+     - db:database
+    depends_on:
+     - db
+    environment:
+     - ZOOM_SITE_NAME=App Server 2
+     - ZOOM_DB_PASS=myrootpass
+     - ZOOM_APPS_PATH=/work/app/apps
+    volumes:
+     - /work/cdw/app/apps:/work/app/apps
+  dev1:
+    image:
+      dsilabs/zoom
+    ports:
+     - "8093:8080"
+    links:
+     - db:database
+    depends_on:
+     - db
+    environment:
+     - ZOOM_SITE_NAME=Dev Workstation 1
+     - ZOOM_DB_PASS=myrootpass
+     - ZOOM_APPS_PATH=/work/app/apps
+    volumes:
+     - /work/cdw/dev1/apps:/work/app/apps
+  dev2:
+    image:
+      dsilabs/zoom
+    ports:
+     - "8094:8080"
+    links:
+     - db:database
+    depends_on:
+     - db
+    environment:
+     - ZOOM_SITE_NAME=Dev Workstation 2
+     - ZOOM_DB_PASS=myrootpass
+     - ZOOM_APPS_PATH=/work/app/apps
+    volumes:
+     - /work/cdw/dev2/apps:/work/app/apps
